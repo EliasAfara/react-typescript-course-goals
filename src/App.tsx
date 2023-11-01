@@ -24,6 +24,13 @@ function App() {
     });
   }
 
+  function handleDeleteGoal(goalId: string) {
+    setGoals((prevGoals) => {
+      const updatedGoals = prevGoals.filter((goal) => goal.id !== goalId);
+      return updatedGoals;
+    });
+  }
+
   return (
     <main>
       <Header image={{ src: goalsImg, alt: "Goals Image" }}>
@@ -32,7 +39,7 @@ function App() {
 
       <button onClick={handleAddGoal}>Add Goal</button>
 
-      <CourseGoalList goals={goals} />
+      <CourseGoalList goals={goals} onDeleteGoal={handleDeleteGoal} />
     </main>
   );
 }
