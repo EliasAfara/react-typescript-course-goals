@@ -1,28 +1,26 @@
-import { type CourseGoal } from "../App";
+import React from "react";
+import { type CourseGoal as CGoal } from "../App";
 
-type CourseGoalProps = CourseGoal & {
+type CourseGoalProps = {
+  goal: CGoal;
   onDelete: (goalId: string) => void;
-  onUpdate: (goal: CourseGoal) => void;
+  onUpdate: (goal: CGoal) => void;
 };
 
-const CourseGoal = ({
-  id,
-  title,
-  description,
+const CourseGoal: React.FC<CourseGoalProps> = ({
+  goal,
   onDelete,
   onUpdate,
-}: CourseGoalProps) => {
+}) => {
   return (
-    <article>
+    <div>
+      <h2>{goal.title}</h2>
+      <p>{goal.description}</p>
       <div>
-        <h2>{title}</h2>
-        <p>{description}</p>
+        <button onClick={() => onDelete(goal.id)}>Delete</button>
+        <button onClick={() => onUpdate(goal)}>Edit</button>
       </div>
-      <button onClick={() => onDelete(id)}>Delete</button>
-      <button onClick={() => onUpdate({ id, title, description })}>
-        Update
-      </button>
-    </article>
+    </div>
   );
 };
 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import CourseGoalList from "./components/CourseGoalList.tsx";
 import Header from "./components/Header.tsx";
 import goalsImg from "./assets/goals.jpg";
@@ -68,7 +67,7 @@ function App() {
 
       <CourseGoalList
         goals={goals}
-        isEditing={isEditing}
+        selectedGoal={selectedGoal}
         onDeleteGoal={handleDeleteGoal}
         onUpdateGoal={handleEdit}
       />

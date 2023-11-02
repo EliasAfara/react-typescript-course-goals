@@ -15,7 +15,7 @@ body {
 
 main {
   width: 90%;
-  max-width: 40rem;
+  max-width: 50rem;
   margin: 3rem auto;
   padding: 2rem;
   background-color: #3a4346;
@@ -85,7 +85,8 @@ ul {
   padding: 0;
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-auto-rows: min-content;
 }
 
 li {
@@ -98,32 +99,47 @@ li {
 li article {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
 }
 
-li h2 {
+li h2,
+li p {
   margin: 0;
   font-size: 1.25rem;
   color: #b1c1c3;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 li p {
-  margin: 0;
   font-size: 0.85rem;
   color: #dfd9be;
+  margin-top: 0.5rem;
+}
+
+li div div {
+  display: flex;
+  justify-content: end;
+  margin: 10px -9px -15px -9px;
+  gap: 0.5rem;
 }
 
 li button {
   font: inherit;
-  padding: 0 0.5rem;
+  padding: 0.5rem;
   background: transparent;
   border: none;
   color: #909a9a;
   cursor: pointer;
+  transition: color 0.2s ease-in-out;
 }
 
 li button:hover {
   color: #f9a73b;
+}
+
+.selected {
+  border: 1px solid #f9a73b;
 }
 
 .fallback {

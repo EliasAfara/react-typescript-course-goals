@@ -1,34 +1,37 @@
+import React from "react";
 import CourseGoal from "./CourseGoal";
 import { type CourseGoal as CGoal } from "../App";
 
 type CourseGoalListProps = {
   goals: CGoal[];
-  isEditing: boolean;
+  selectedGoal: CGoal | null;
   onDeleteGoal: (goalId: string) => void;
   onUpdateGoal: (goal: CGoal) => void;
 };
 
-const CourseGoalList = ({
+const CourseGoalList: React.FC<CourseGoalListProps> = ({
   goals,
+  selectedGoal,
   onDeleteGoal,
   onUpdateGoal,
-}: CourseGoalListProps) => {
+}) => {
   return (
-    <>
-      <ul>
-        {goals.map((goal) => (
-          <li key={`${goal.title}-${goal.id}`}>
-            <CourseGoal
-              id={goal.id}
-              title={goal.title}
-              description={goal.description}
-              onDelete={onDeleteGoal}
-              onUpdate={onUpdateGoal}
-            />
-          </li>
-        ))}
-      </ul>
-    </>
+    <ul>
+      {goals.map((goal) => (
+        <li
+          key={`${goal.title}-${goal.id}`}
+          className={
+            selectedGoal && selectedGoal.id === goal.id ? "selected" : ""
+          }
+        >
+          <CourseGoal
+            goal={goal}
+            onDelete={onDeleteGoal}
+            onUpdate={onUpdateGoal}
+          />
+        </li>
+      ))}
+    </ul>
   );
 };
 
