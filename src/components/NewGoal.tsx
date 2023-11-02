@@ -1,10 +1,21 @@
-import { useRef, type FormEvent } from "react";
+import { useRef, type FormEvent, useEffect } from "react";
+import { type CourseGoal } from "../App";
 
 type NewGoalProp = {
   onAddNewGoal: (title: string, description: string) => void;
+  onUpdateGoal: (title: string, description: string) => void;
+  selectedGoal: CourseGoal | null;
+  isEditing: boolean;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const NewGoal = ({ onAddNewGoal }: NewGoalProp) => {
+const NewGoal = ({
+  onAddNewGoal,
+  onUpdateGoal,
+  selectedGoal,
+  isEditing,
+  setIsEditing,
+}: NewGoalProp) => {
   const goal = useRef<HTMLInputElement>(null);
   const summary = useRef<HTMLInputElement>(null);
 
@@ -13,8 +24,24 @@ const NewGoal = ({ onAddNewGoal }: NewGoalProp) => {
 
     const newGoal = goal.current!.value;
     const newSummary = summary.current!.value;
-    onAddNewGoal(newGoal, newSummary);
+
+    if (isEditing) {
+      onUpdateGoal(newGoal, newSummary);
+      setIsEditing(false);
+    } else {
+      onAddNewGoal(newGoal, newSummary);
+    }
+
+    goal.current!.value = "";
+    summary.current!.value = "";
   };
+
+  useEffect(() => {
+    if (isEditing) {
+      goal.current!.value = selectedGoal!.title;
+      summary.current!.value = selectedGoal!.description;
+    }
+  }, [isEditing, selectedGoal]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -41,7 +68,7 @@ const NewGoal = ({ onAddNewGoal }: NewGoalProp) => {
       </p>
 
       <p>
-        <button type='submit'>Add Goal</button>
+        <button type='submit'>{isEditing ? "Update Goal" : "Add Goal"}</button>
       </p>
     </form>
   );

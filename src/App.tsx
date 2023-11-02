@@ -13,6 +13,8 @@ export type CourseGoal = {
 
 function App() {
   const [goals, setGoals] = useState<CourseGoal[]>([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedGoal, setSelectedGoalId] = useState<CourseGoal | null>(null);
 
   function handleAddGoal(title: string, description: string) {
     setGoals((prevGoals) => {
@@ -32,15 +34,44 @@ function App() {
     });
   }
 
+  function handleUpdateGoal(title: string, description: string) {
+    setGoals((prevGoals) => {
+      const updatedGoals = prevGoals.map((goal) => {
+        if (goal.id === selectedGoal!.id) {
+          return { ...goal, title, description };
+        }
+        return goal;
+      });
+      return updatedGoals;
+    });
+    setSelectedGoalId(null);
+  }
+
+  const handleEdit = (goal: CourseGoal) => {
+    setIsEditing(true);
+    setSelectedGoalId(goal);
+  };
+
   return (
     <main>
       <Header image={{ src: goalsImg, alt: "Goals Image" }}>
         <h1>Your Course Goals</h1>
       </Header>
 
-      <NewGoal onAddNewGoal={handleAddGoal} />
+      <NewGoal
+        onAddNewGoal={handleAddGoal}
+        onUpdateGoal={handleUpdateGoal}
+        selectedGoal={selectedGoal}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+      />
 
-      <CourseGoalList goals={goals} onDeleteGoal={handleDeleteGoal} />
+      <CourseGoalList
+        goals={goals}
+        isEditing={isEditing}
+        onDeleteGoal={handleDeleteGoal}
+        onUpdateGoal={handleEdit}
+      />
     </main>
   );
 }
