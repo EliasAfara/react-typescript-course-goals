@@ -3,6 +3,7 @@ import { useState } from "react";
 import CourseGoalList from "./components/CourseGoalList.tsx";
 import Header from "./components/Header.tsx";
 import goalsImg from "./assets/goals.jpg";
+import NewGoal from "./components/NewGoal.tsx";
 
 export type CourseGoal = {
   id: string;
@@ -13,12 +14,12 @@ export type CourseGoal = {
 function App() {
   const [goals, setGoals] = useState<CourseGoal[]>([]);
 
-  function handleAddGoal() {
+  function handleAddGoal(title: string, description: string) {
     setGoals((prevGoals) => {
       const newGoal = {
         id: Math.random().toString(),
-        title: "Finish the Course",
-        description: "Learn all about the course main topics.",
+        title,
+        description,
       };
       return [...prevGoals, newGoal];
     });
@@ -37,7 +38,7 @@ function App() {
         <h1>Your Course Goals</h1>
       </Header>
 
-      <button onClick={handleAddGoal}>Add Goal</button>
+      <NewGoal onAddNewGoal={handleAddGoal} />
 
       <CourseGoalList goals={goals} onDeleteGoal={handleDeleteGoal} />
     </main>
