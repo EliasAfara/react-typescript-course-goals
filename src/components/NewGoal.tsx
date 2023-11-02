@@ -20,12 +20,24 @@ const NewGoal = ({ onAddNewGoal }: NewGoalProp) => {
     <form onSubmit={handleSubmit}>
       <p>
         <label htmlFor='goal'>goal</label>
-        <input id='goal' type='text' name='goal' ref={goal} />
+        <input
+          id='goal'
+          type='text'
+          name='goal'
+          ref={goal}
+          placeholder='Your new goal'
+        />
       </p>
 
       <p>
         <label htmlFor='summary'>summary</label>
-        <input id='summary' type='text' name='summary' ref={summary} />
+        <input
+          id='summary'
+          type='text'
+          name='summary'
+          ref={summary}
+          placeholder='Your new goal summary'
+        />
       </p>
 
       <p>
